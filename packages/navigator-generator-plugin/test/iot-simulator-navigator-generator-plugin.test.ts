@@ -1,3 +1,4 @@
+import 'reflect-metadata'
 import NavigatorSimulator from '../src/iot-simulator-navigator-generator-plugin'
 
 /**
@@ -9,9 +10,11 @@ describe('Dummy test', () => {
   })
 
   it('DummyClass is instantiable', () => {
-    expect(new NavigatorSimulator('Start', 'End', 20)).toBeInstanceOf(NavigatorSimulator)
+    expect(new NavigatorSimulator('Town Hall, Sydney, NSW', 'Parramatta, NSW', 20)).toBeInstanceOf(
+      NavigatorSimulator
+    )
   })
-  const navSim = new NavigatorSimulator('Start', 'End', 20)
+  const navSim = new NavigatorSimulator('Town Hall, Sydney, NSW', 'Parramatta, NSW', 20)
   navSim.start()
 
   console.log('done test')
