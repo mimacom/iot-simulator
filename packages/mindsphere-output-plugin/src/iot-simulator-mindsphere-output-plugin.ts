@@ -11,13 +11,13 @@ const log = (text: any) => {
   console.log(`[${new Date().toISOString()}] ${text.toString()}`);
 };
 
-// @provideNamed(OUTPUT_TYPE, 'mindsphere')
+@provideNamed(OUTPUT_TYPE, 'mindsphere')
 export default class IotSimulatorMindsphereOutputPlugin implements OutputPlugin {
 
   private readonly mindConnectAgent: MindConnectAgent;
   private static readonly RETRYTIMES: number = 5;
 
-  constructor(private mindConnectConfiguration: IMindConnectConfiguration) {
+  constructor(mindConnectConfiguration: IMindConnectConfiguration) {
     this.mindConnectAgent = new MindConnectAgent(mindConnectConfiguration);
   }
 
