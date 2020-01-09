@@ -1,3 +1,7 @@
-interface OutputPlugin {}
+interface OutputPlugin {
+  send: (payload: Payload) => void
+}
 
-export { OutputPlugin }
+const TYPE = Symbol.for('OutputPlugin')
+
+export { OutputPlugin, TYPE }
