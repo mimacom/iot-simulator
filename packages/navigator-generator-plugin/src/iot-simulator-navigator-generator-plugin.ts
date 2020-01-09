@@ -61,11 +61,11 @@ export default class NavigatorSimulator implements StatefulGeneratorPlugin<GeoLo
   }
   next(): GeoLocation {
     let difference = (Date.now() - this.lastTimeStamp) / 1000
+    let i = 0
+    while (this.locations[i].totalDuration <= difference) {
+      i++
+    }
     this.lastTimeStamp = Date.now()
-    return new GeoLocation(
-      this.locations[this.index].location.lat,
-      this.locations[this.index++].location.lng,
-      20
-    )
+    return new GeoLocation(this.locations[i].location.lat, this.locations[i].location.lng, 20)
   }
 }

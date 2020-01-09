@@ -14,6 +14,7 @@ describe('Dummy test', async () => {
     await navSim.init()
     navSim.start()
     console.log(navSim.next())
+    // wait 10 seconds if feeling fancy
     console.log(navSim.next())
   })
 
