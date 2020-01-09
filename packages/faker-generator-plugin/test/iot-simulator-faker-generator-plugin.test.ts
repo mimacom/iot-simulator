@@ -1,14 +1,9 @@
-import DummyClass from "../src/iot-simulator-faker-generator-plugin"
+import StatelessFakerGeneratorPlugin from "../src/iot-simulator-faker-generator-plugin"
 
-/**
- * Dummy test
- */
-describe("Dummy test", () => {
-  it("works if true is truthy", () => {
-    expect(true).toBeTruthy()
-  })
+describe("StatelessFakerGeneratorPlugin test", () => {
 
-  it("DummyClass is instantiable", () => {
-    expect(new DummyClass()).toBeInstanceOf(DummyClass)
-  })
-})
+
+  it("Generate name by string", () => {
+    expect(new StatelessFakerGeneratorPlugin().generate("{{name.findName}}")).toEqual(expect.any(String));
+  });
+});
