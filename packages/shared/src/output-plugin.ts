@@ -1,7 +1,9 @@
+import { Payload } from './payload'
+
 interface OutputPlugin {
   send: (payload: Payload) => void
 }
 
-const TYPE = Symbol.for('OutputPlugin')
+const OUTPUT_TYPE = Symbol.for('OutputPlugin')
 
-export { OutputPlugin, TYPE }
+export { OutputPlugin, OUTPUT_TYPE }

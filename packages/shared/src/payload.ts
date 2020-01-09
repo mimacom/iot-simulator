@@ -1,3 +1,3 @@
-interface Payload {
+interface Payload {}
 
-}
+export { Payload }
