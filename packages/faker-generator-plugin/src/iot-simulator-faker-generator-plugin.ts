@@ -1,4 +1,4 @@
-import * as faker from 'faker'
+const faker = require('faker')
 import { StatelessGeneratorPlugin, STATELESS_TYPE, provideNamed } from 'iot-simulator-shared'
 
 @provideNamed(STATELESS_TYPE, 'faker')

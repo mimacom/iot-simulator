@@ -118,6 +118,12 @@
     "typescript": "^3.0.3"
   },
   "dependencies": {
+    "@thecodeaware/ts-interface-builder": "^1.2.0",
+    "inversify": "^5.0.1",
+    "inversify-binding-decorators": "^4.0.0",
+    "iot-simulator-faker-generator-plugin": "^0.0.0",
+    "iot-simulator-mindsphere-output-plugin": "^0.0.0",
+    "iot-simulator-navigator-generator-plugin": "^0.0.0",
     "iot-simulator-shared": "^0.0.0"
   }
 }
