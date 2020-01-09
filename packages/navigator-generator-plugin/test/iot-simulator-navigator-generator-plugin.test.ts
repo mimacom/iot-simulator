@@ -12,8 +12,7 @@ describe('Dummy test', () => {
     expect(new NavigatorSimulator('Start', 'End', 20)).toBeInstanceOf(NavigatorSimulator)
   })
   const navSim = new NavigatorSimulator('Start', 'End', 20)
-  for (let i = 0; i < 5; i++) {
-    setTimeout(navSim.next, 1000)
-  }
+  navSim.start()
+
   console.log('done test')
 })
