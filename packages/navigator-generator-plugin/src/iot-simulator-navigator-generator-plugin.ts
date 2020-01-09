@@ -1,10 +1,10 @@
-import { StatefulGeneratorPlugin } from '../../shared/src/generator-plugin'
-import GeoLocation from '../../shared/src/geolocation'
-import { mapskey } from '../apikey'
+import { StatefulGeneratorPlugin, STATEFUL_TYPE, provideNamed, GeoLocation } from 'iot-simulator-shared'
+
 const googleMapsClient = require('@google/maps').createClient({
-  key: mapskey,
+  key: process.env.API_KEY,
   Promise: Promise
 })
+@provideNamed(STATEFUL_TYPE, 'navigator')
 export default class NavigatorSimulator implements StatefulGeneratorPlugin<GeoLocation> {
   startLocation!: String
   endLocation!: String
