@@ -118,6 +118,8 @@
     "typescript": "^3.0.3"
   },
   "dependencies": {
-    "iot-simulator-shared": "^0.0.0"
+    "iot-simulator-shared": "^0.0.0",
+    "@google/maps": "^1.0.2",
+    "@types/google__maps": "^0.5.11"
   }
 }
