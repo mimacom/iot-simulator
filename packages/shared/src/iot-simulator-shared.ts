@@ -1,6 +1,2 @@
-// Import here Polyfills if needed. Recommended core-js (npm i -D core-js)
-  // import "core-js/fn/array.find"
-  // ...
-export default class DummyClass {
-
-}
+export { StatelessGeneratorPlugin, StatefulGeneratorPlugin } from './generator-plugin'
+export { OutputPlugin } from './output-plugin'
