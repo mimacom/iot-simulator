@@ -4,9 +4,6 @@ import {
   provideNamed,
   GeoLocation
 } from 'iot-simulator-shared'
-import { setPriority } from 'os'
-import { setupMaster } from 'cluster'
-import { GeocodedWaypoint } from '@google/maps'
 
 const googleMapsClient = require('@google/maps').createClient({
   key: process.env.API_KEY,
@@ -19,13 +16,14 @@ export default class NavigatorSimulator implements StatefulGeneratorPlugin<GeoLo
   speed!: number
   lastTimeStamp!: number
   locations!: any[]
+  index = 0
   constructor(startLocation: String, endLocation: String, speed: number) {
     this.startLocation = startLocation
     this.endLocation = endLocation
     this.speed = speed
   }
-  start() {
-    googleMapsClient
+  init(): Promise<Boolean> {
+    return googleMapsClient
       .directions({
         origin: this.startLocation,
         destination: this.endLocation,
@@ -34,7 +32,7 @@ export default class NavigatorSimulator implements StatefulGeneratorPlugin<GeoLo
       .asPromise()
       .then((response: any) => {
         let waypoints = response.json.routes[0].legs[0].steps
-        let locations = waypoints.map((waypoint: any) => {
+        this.locations = waypoints.map((waypoint: any) => {
           return {
             location: waypoint.start_location,
             distance: waypoint.distance,
@@ -42,19 +40,29 @@ export default class NavigatorSimulator implements StatefulGeneratorPlugin<GeoLo
           }
         })
 
-        locations.push({
+        this.locations.push({
           location: response.json.routes[0].legs[0].end_location,
           distance: response.json.routes[0].legs[0].distance,
           duration: response.json.routes[0].legs[0].duration
         })
-        console.log(locations)
+        console.log(this.locations)
+        return new Promise((resolve, reject) => resolve('success'))
       })
-      .catch((err: any) => console.log(err))
+      .catch((err: any) => {
+        console.log(err)
+        return new Promise((resolve, reject) => reject('failed'))
+      })
+  }
+  start() {
     this.lastTimeStamp = Date.now()
   }
   next(): GeoLocation {
     let difference = (Date.now() - this.lastTimeStamp) / 1000
     this.lastTimeStamp = Date.now()
-    return new GeoLocation(47.3459679, 9.8862023, 20)
+    return new GeoLocation(
+      this.locations[this.index].location.lat,
+      this.locations[this.index++].location.lng,
+      20
+    )
   }
 }

@@ -4,18 +4,18 @@ import NavigatorSimulator from '../src/iot-simulator-navigator-generator-plugin'
 /**
  * Dummy test
  */
-describe('Dummy test', () => {
+describe('Dummy test', async () => {
   it('works if true is truthy', () => {
     expect(true).toBeTruthy()
   })
 
-  it('DummyClass is instantiable', () => {
-    expect(new NavigatorSimulator('Town Hall, Sydney, NSW', 'Parramatta, NSW', 20)).toBeInstanceOf(
-      NavigatorSimulator
-    )
+  it('DummyClass is instantiable', async () => {
+    const navSim = new NavigatorSimulator('Town Hall, Sydney, NSW', 'Parramatta, NSW', 20)
+    await navSim.init()
+    navSim.start()
+    console.log(navSim.next())
+    console.log(navSim.next())
   })
-  const navSim = new NavigatorSimulator('Town Hall, Sydney, NSW', 'Parramatta, NSW', 20)
-  navSim.start()
 
   console.log('done test')
 })
