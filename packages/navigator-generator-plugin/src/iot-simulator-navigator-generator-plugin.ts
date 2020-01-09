@@ -32,11 +32,14 @@ export default class NavigatorSimulator implements StatefulGeneratorPlugin<GeoLo
       .asPromise()
       .then((response: any) => {
         let waypoints = response.json.routes[0].legs[0].steps
+        let sum = 0
         this.locations = waypoints.map((waypoint: any) => {
+          sum = waypoint.duration.value + sum
           return {
             location: waypoint.start_location,
             distance: waypoint.distance,
-            duration: waypoint.duration
+            duration: waypoint.duration,
+            totalDuration: sum
           }
         })
 
