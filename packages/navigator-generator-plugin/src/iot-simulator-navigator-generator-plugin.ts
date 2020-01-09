@@ -1,6 +1,9 @@
 import { StatefulGeneratorPlugin } from '../../shared/src/generator-plugin'
 import GeoLocation from '../../shared/src/geolocation'
-const googleMapsClient = require('@google/maps')
+
+const googleMapsClient = require('@google/maps').createClient({
+  key: 'AIzaSyAIL-y8F8ZUDXAWMbUYpLNZf3HybNIhiyE'
+})
 export default class NavigatorSimulator implements StatefulGeneratorPlugin<GeoLocation> {
   startLocation!: String
   endLocation!: String
@@ -13,16 +16,21 @@ export default class NavigatorSimulator implements StatefulGeneratorPlugin<GeoLo
     this.speed = speed
   }
   start() {
-    googleMapsClient
-      .geocode({
+    googleMapsClient.geocode(
+      {
         address: 'Sydney Opera House'
-      })
-      .asPromise()
+      },
+      (err: any, response: any) => {
+        if (!err) {
+          console.log(response.json.results)
+        }
+      }
+    )
     this.lastTimeStep = Date.now()
   }
   next(): GeoLocation {
     this.lastTimeStep = Date.now()
     console.log(this.lastTimeStep)
-    return new GeoLocation(47.3459679, 9.8862023)
+    return new GeoLocation(47.3459679, 9.8862023, 20)
   }
 }
