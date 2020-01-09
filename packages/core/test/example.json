@@ -1,0 +1,60 @@
+{
+  "title": "Mining company Simulation",
+  "description": "This simulation will generate data for a fleet of trucks",
+  "randomSeed": "seed",
+  "startTime": "",
+  "stopTime": "",
+  "devices": [
+    {
+      "uuid": "init:faker:{{random.uuid}}",
+      "instances": 10,
+      "metadata": {
+        "type": "truck",
+        "driver": "init:faker:{{name.findName}}",
+        "weigth": "init:faker:{{random.number({\"min\": 20, \"max\": 25})}}"
+      },
+      "sensors": [
+        {
+          "id": "location",
+          "label": "Location",
+          "unit": "GPS",
+          "samplingRate": 10000,
+          "value": "tick:navigator:navigate('Stuttgart','Frankfurt', 70, 90, 0.02)"
+        },
+        {
+          "id": "speed",
+          "label": "Speed",
+          "unit": "km/h",
+          "samplingRate": 2000,
+          "value": "tick:navigator:speed"
+        }
+      ],
+      "devices": [
+        {
+          "uuid": "init:faker:{{random.uuid}}",
+          "instances": 1,
+          "metadata": {
+            "type": "engine",
+            "power": "init:faker:{{random.number({\"min\": 300, \"max\": 400})}} hp"
+          },
+          "sensors": [
+            {
+              "id": "temperature",
+              "label": "Temperature",
+              "unit": "C",
+              "samplingRate": 5000,
+              "value": "tick:faker:{{random.number({\"min\": 300, \"max\": 400})}}"
+            },
+            {
+              "id": "rpm",
+              "label": "RPM",
+              "unit": "rpm",
+              "samplingRate": 500,
+              "value": "tick:faker:{{random.number({\"min\": 1100, \"max\": 4000})}}"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
