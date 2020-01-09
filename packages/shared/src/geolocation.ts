@@ -1,4 +1,4 @@
-export default class GeoLocation {
+class GeoLocation {
   latitude!: number
   longitude!: number
   currentSpeed: number
@@ -8,3 +8,5 @@ export default class GeoLocation {
     this.currentSpeed = speed
   }
 }
+
+export { GeoLocation }
