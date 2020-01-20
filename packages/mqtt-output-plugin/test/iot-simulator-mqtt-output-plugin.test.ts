@@ -1,6 +1,5 @@
 import 'reflect-metadata'
 import MQTTOutputPlugin from '../src/iot-simulator-mqtt-output-plugin'
-import { Payload } from 'iot-simulator-shared'
 
 const mqttClientName: string = 'iot-data-simulator'
 const mqttClientID: string = 'iot-data-simulator'
@@ -27,7 +26,7 @@ describe('Dummy test', () => {
       password
     )
     mqttOut.createDevice()
-    const payload: Payload = {
+    const payload: any = {
       devices: [
         {
           sensors: [

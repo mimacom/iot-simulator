@@ -1,15 +1,15 @@
 {
-  "name": "iot-simulator-mqtt-output-plugin",
+  "name": "iot-simulator-api",
   "version": "0.0.0",
   "description": "",
   "keywords": [],
-  "main": "dist/iot-simulator-mqtt-output-plugin.umd.js",
-  "module": "dist/iot-simulator-mqtt-output-plugin.es5.js",
-  "typings": "dist/types/iot-simulator-mqtt-output-plugin.d.ts",
+  "main": "dist/iot-simulator-api.umd.js",
+  "module": "dist/iot-simulator-api.es5.js",
+  "typings": "dist/types/iot-simulator-api.d.ts",
   "files": [
     "dist"
   ],
-  "author": "Joachim Spalink <j.spalink@gmx.de>",
+  "author": "Ivan Greguric Ortolan <ivan.g.ortolan@gmail.com>",
   "repository": {
     "type": "git",
     "url": ""
@@ -81,19 +81,11 @@
       "@commitlint/config-conventional"
     ]
   },
-  "dependencies": {
-    "iot-simulator-api": "^0.0.0",
-    "iot-simulator-shared": "^0.0.0",
-    "mqtt": "^3.0.0",
-    "uuid": "^3.3.3"
-  },
   "devDependencies": {
-    "reflect-metadata": "^0.1.13",
     "@commitlint/cli": "^7.1.2",
     "@commitlint/config-conventional": "^7.1.2",
-    "@types/jest": "^23.3.14",
-    "@types/node": "^10.17.13",
-    "@types/uuid": "^3.4.6",
+    "@types/jest": "^23.3.2",
+    "@types/node": "^10.11.0",
     "colors": "^1.3.2",
     "commitizen": "^3.0.0",
     "coveralls": "^3.0.2",

@@ -81,6 +81,12 @@
       "@commitlint/config-conventional"
     ]
   },
+  "dependencies": {
+    "iot-simulator-api": "^0.0.0",
+    "iot-simulator-shared": "^0.0.0",
+    "iot-simulator-faker-generator-plugin": "^0.0.0",
+    "iot-simulator-stdout-output-plugin": "^0.0.0"
+  },
   "devDependencies": {
     "@commitlint/cli": "^7.1.2",
     "@commitlint/config-conventional": "^7.1.2",
@@ -98,6 +104,7 @@
     "lodash.camelcase": "^4.3.0",
     "prettier": "^1.14.3",
     "prompt": "^1.0.0",
+    "reflect-metadata": "^0.1.13",
     "replace-in-file": "^3.4.2",
     "rimraf": "^2.6.2",
     "rollup": "^0.67.0",
@@ -116,14 +123,5 @@
     "tslint-config-standard": "^8.0.1",
     "typedoc": "^0.12.0",
     "typescript": "^3.0.3"
-  },
-  "dependencies": {
-    "@thecodeaware/ts-interface-builder": "^1.2.0",
-    "inversify": "^5.0.1",
-    "inversify-binding-decorators": "^4.0.0",
-    "iot-simulator-faker-generator-plugin": "^0.0.0",
-    "iot-simulator-mindsphere-output-plugin": "^0.0.0",
-    "iot-simulator-navigator-generator-plugin": "^0.0.0",
-    "iot-simulator-shared": "^0.0.0"
   }
 }

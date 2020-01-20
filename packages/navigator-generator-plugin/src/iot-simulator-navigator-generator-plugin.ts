@@ -1,16 +1,13 @@
-import {
-  StatefulGeneratorPlugin,
-  STATEFUL_TYPE,
-  provideNamed,
-  GeoLocation
-} from 'iot-simulator-shared'
+import { StatefulGeneratorPlugin, STATEFUL_PLUGIN_TYPE } from 'iot-simulator-api'
+import { provideNamed, builderOf } from 'iot-simulator-shared'
 
 const googleMapsClient = require('@google/maps').createClient({
   key: process.env.API_KEY,
   Promise: Promise
 })
-@provideNamed(STATEFUL_TYPE, 'navigator')
-export default class NavigatorSimulator implements StatefulGeneratorPlugin<GeoLocation> {
+
+@provideNamed(STATEFUL_PLUGIN_TYPE, 'navigator')
+export class NavigatorSimulator implements StatefulGeneratorPlugin<GeoLocation> {
   startLocation!: String
   endLocation!: String
   speed!: number
@@ -49,11 +46,11 @@ export default class NavigatorSimulator implements StatefulGeneratorPlugin<GeoLo
           duration: response.json.routes[0].legs[0].duration
         })
         console.log(this.locations)
-        return new Promise((resolve, reject) => resolve('success'))
+        return new Promise((resolve, _) => resolve('success'))
       })
       .catch((err: any) => {
         console.log(err)
-        return new Promise((resolve, reject) => reject('failed'))
+        return new Promise((_, reject) => reject('failed'))
       })
   }
   start() {
@@ -66,6 +63,12 @@ export default class NavigatorSimulator implements StatefulGeneratorPlugin<GeoLo
       i++
     }
     this.lastTimeStamp = Date.now()
-    return new GeoLocation(this.locations[i].location.lat, this.locations[i].location.lng, 20)
+    return builderOf<GeoLocation>()
+      .latitude(this.locations[i].location.lat)
+      .longitude(this.locations[i].location.lng)
+      .speed(20)
+      .build()
   }
 }
+
+export default NavigatorSimulator

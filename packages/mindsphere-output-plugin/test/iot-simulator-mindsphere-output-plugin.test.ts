@@ -1,21 +1,25 @@
-import IotSimulatorMindsphereOutputPlugin from "../src/iot-simulator-mindsphere-output-plugin"
-import { IMindConnectConfiguration } from '@mindconnect/mindconnect-nodejs';
+import 'reflect-metadata'
+
+import { IMindConnectConfiguration } from '@mindconnect/mindconnect-nodejs'
+import { IotSimulatorMindsphereOutputPlugin } from '../src/iot-simulator-mindsphere-output-plugin'
 
 /**
  * Dummy test
  */
-describe("Dummy test", () => {
-  it("works if true is truthy", () => {
+describe('Dummy test', () => {
+  it('works if true is truthy', () => {
     expect(true).toBeTruthy()
-  });
+  })
 
-  it("IotSimulatorMindsphereOutputPlugin is instantiable", () => {
-    const mindConnectConfiguration: IMindConnectConfiguration = require("../src/agentconfig.json");
-    expect(new IotSimulatorMindsphereOutputPlugin(mindConnectConfiguration)).toBeInstanceOf(IotSimulatorMindsphereOutputPlugin)
-  });
+  it('IotSimulatorMindsphereOutputPlugin is instantiable', () => {
+    const mindConnectConfiguration: IMindConnectConfiguration = require('../src/agentconfig.json')
+    expect(new IotSimulatorMindsphereOutputPlugin(mindConnectConfiguration)).toBeInstanceOf(
+      IotSimulatorMindsphereOutputPlugin
+    )
+  })
 
   it('Should Send Data to Mindsphere', async () => {
-    const mindConnectConfiguration: IMindConnectConfiguration = require("../src/agentconfig.json");
+    const mindConnectConfiguration: IMindConnectConfiguration = require('../src/agentconfig.json')
     await new IotSimulatorMindsphereOutputPlugin(mindConnectConfiguration).send({
       devices: [
         {
@@ -31,7 +35,6 @@ describe("Dummy test", () => {
           ]
         }
       ]
-    });
-  });
-
-});
+    })
+  })
+})

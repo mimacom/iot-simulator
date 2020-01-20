@@ -1,4 +1,4 @@
-import { builderOf } from '../builder/proxy-interface-builder'
+import { builderOf } from 'iot-simulator-shared'
 
 export interface GenerationConfig {
   mode: GenerationMode
@@ -12,8 +12,7 @@ export enum GenerationMode {
 }
 
 export const parseConfig = (config: string) => {
-
-  const matches = config.match(/^^([^:]+):([^:]+):(.+)$/) || ['','',''];
+  const matches = config.match(/^^([^:]+):([^:]+):(.+)$/) || ['', '', '']
 
   return builderOf<GenerationConfig>()
     .mode((GenerationMode as any)[matches[0]])

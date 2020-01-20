@@ -1,10 +1,12 @@
-import { OutputPlugin, OUTPUT_TYPE, provideNamed, Payload, Sensor } from 'iot-simulator-shared'
+import { OutputPlugin, OUTPUT_PLUGIN_TYPE } from 'iot-simulator-api'
+import { provideNamed } from 'iot-simulator-shared'
 import { connect, Client } from 'mqtt'
 import uuid from 'uuid/v4'
+
 /**
  * MQTT output plugin, templates compatible with mindsphere and cumulocity
  */
-@provideNamed(OUTPUT_TYPE, 'mqtt-output')
+@provideNamed(OUTPUT_PLUGIN_TYPE, 'mqtt-output')
 export default class MQTTOutputPlugin implements OutputPlugin {
   mqttClient: Client
   defaultTopic = 's/us'
@@ -40,9 +42,9 @@ export default class MQTTOutputPlugin implements OutputPlugin {
    * Every other uses template 200 for Custom Measurement
    * @param payload
    */
-  send(payload: Payload) {
-    payload.devices.forEach(d => {
-      d.sensors.forEach(s => {
+  send(payload: any) {
+    payload.devices.forEach((d: any) => {
+      d.sensors.forEach((s: any) => {
         switch (s.id) {
           case 'temperature': {
             this.mqttClient.publish(this.defaultTopic, `${this.mqttTemperatureTemplate},${s.value}`)

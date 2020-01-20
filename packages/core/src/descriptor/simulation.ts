@@ -7,4 +7,6 @@ export interface Simulation {
   startTime?: string
   endTime?: string
   devices: Device[]
+  generatorPlugins: any[]
+  outputPlugins: any[]
 }
