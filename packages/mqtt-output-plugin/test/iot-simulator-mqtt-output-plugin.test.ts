@@ -1,14 +1,15 @@
+import 'reflect-metadata'
 import MQTTOutputPlugin from '../src/iot-simulator-mqtt-output-plugin'
 
 /**
  * Dummy test
  */
 const mqttClientName: string = 'iot-data-simulator'
-const mqttClientID: string = 'iot-data-simuluator'
-const mqttHost: string = 'mciotextension.eu1.mindsphere.io'
+const mqttClientID: string = 'iot-data-simulator'
+const mqttHost: string = 'tcp://mciotextension.eu1.mindsphere.io'
 const tenant: string = 'mimacom'
-const username: string = 'joachim.spalink@mimacom.com'
-const password: string = '4H?P=&,u|UdK$TcU@xI7'
+const username: string = process.env.MINDSPHERE_USERNAME
+const password: string = process.env.MINDSPHERE_PASSWORD
 
 describe('Dummy test', () => {
   it('works if true is truthy', () => {
@@ -24,8 +25,9 @@ describe('Dummy test', () => {
       username,
       password
     )
-    expect(mqttOut).toBeInstanceOf(MQTTOutputPlugin)
+    console.log('client id is: ' + mqttOut.mqttClientID)
     mqttOut.createDevice()
     mqttOut.createCustomMeasurement('fuelconsumption', 'Liters', '10', 'L')
+    expect(mqttOut).toBeInstanceOf(MQTTOutputPlugin)
   })
 })

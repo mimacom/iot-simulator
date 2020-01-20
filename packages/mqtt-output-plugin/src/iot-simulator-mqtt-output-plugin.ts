@@ -33,8 +33,11 @@ export default class MQTTOutputPlugin implements OutputPlugin {
   send(payload: Payload) {
     // this.mqttClient.publish(this.defaultTopic, payload, { qos: 0, retain: false })
   }
+  subscibteToOprations() {
+    return this.mqttClient.subscribe('s/ds')
+  }
   createDevice() {
-    this.mqttClient.publish(this.defaultTopic, `100,${this.mqttClientName},MCIoT_MQTTdevice`)
+    this.mqttClient.publish(this.defaultTopic, `100,${this.mqttClientName},iot-data-simulator`)
   }
   setDeviceInformation(serialNumber: string, hardwareModel: string, revision: string) {
     this.mqttClient.publish(this.defaultTopic, `110,${serialNumber},${hardwareModel},${revision}`)
