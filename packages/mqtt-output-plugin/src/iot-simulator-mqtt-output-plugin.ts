@@ -71,7 +71,7 @@ export default class MQTTOutputPlugin implements OutputPlugin {
    * creates device using template 100
    */
   createDevice() {
-    this.mqttClient.publish(this.defaultTopic, `100,${this.mqttClientName},iot-data-simulator`)
+    this.mqttClient.publish(this.defaultTopic, `100,${this.mqttClientName},iot_data_simulator`)
   }
   /**
    * Set device information with template 110
@@ -85,19 +85,14 @@ export default class MQTTOutputPlugin implements OutputPlugin {
   /**
    * Send custom measurement using template 200
    * @param measurementName
-   * @param measurementValueName
+   * @param label
    * @param value
-   * @param symbol
+   * @param unit
    */
-  sendCustomMeasurement(
-    measurementName: string,
-    measurementValueName: string,
-    value: string,
-    symbol: string
-  ) {
+  sendCustomMeasurement(measurementName: string, label: string, value: string, unit: string) {
     this.mqttClient.publish(
       this.defaultTopic,
-      `${this.mqttCustomTemplate},${measurementName},${measurementValueName},${value},${symbol}`
+      `${this.mqttCustomTemplate},${measurementName},${label},${value},${unit}`
     )
   }
 }

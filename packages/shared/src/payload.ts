@@ -15,9 +15,8 @@ export interface Metadata {
 
 export interface Sensor {
   id: string
-  // label: string;
-  unitLabel?: string
-  unit?: string
+  label: string
+  unit: string
   // samplingRate: number;
   value: string
 }

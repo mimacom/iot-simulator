@@ -34,7 +34,7 @@ describe('Dummy test', () => {
             { id: 'temperature', value: '25' },
             { id: 'rssi', value: '-37' },
             { id: 'battery', value: '30' }
-            // { id: 'fuelconsumption', value: '10', unit: 'L', unitLabel: 'Liters' }
+            // { id: 'fuelconsumption', value: '10', unit: 'L', label: 'Liters' }
           ]
         }
       ]
