@@ -4,27 +4,28 @@ export interface Payload {
   // randomSeed: string;
   // startTime: string;
   // stopTime: string;
-  devices: Device[];
+  devices: Device[]
 }
 
 export interface Metadata {
-  type: string;
-  driver: string;
-  weigth: string;
+  type: string
+  driver: string
+  weight: string
 }
 
 export interface Sensor {
-  id: string;
+  id: string
   // label: string;
-  // unit: string;
+  unitLabel?: string
+  unit?: string
   // samplingRate: number;
-  value: string;
+  value: string
 }
 
 export interface Device {
   // uuid: string;
   // instances: number;
   // metadata: Metadata;
-  sensors: Sensor[];
+  sensors: Sensor[]
   // devices: Device[];
 }

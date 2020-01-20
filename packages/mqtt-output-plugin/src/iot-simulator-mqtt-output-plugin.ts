@@ -7,7 +7,7 @@ export default class MQTTOutputPlugin implements OutputPlugin {
   defaultTopic = 's/us'
 
   mqttClientID: string
-  mqttSignalStrengthTemplate: string = '210'
+  mqttRSSITemplate: string = '210'
   mqttTemperatureTemplate: string = '211'
   mqttBatteryTemplate: string = '212'
   mqttCustomTemplate: string = '200'
@@ -32,6 +32,31 @@ export default class MQTTOutputPlugin implements OutputPlugin {
   }
   send(payload: Payload) {
     // this.mqttClient.publish(this.defaultTopic, payload, { qos: 0, retain: false })
+    payload.devices.forEach(d =>
+      d.sensors.forEach(s => {
+        switch (s.id) {
+          case 'temperature': {
+            console.log(s.value)
+            this.mqttClient.publish(this.defaultTopic, `${this.mqttTemperatureTemplate},${s.value}`)
+            break
+          }
+          case 'rssi': {
+            console.log(s.value)
+            this.mqttClient.publish(this.defaultTopic, `${this.mqttRSSITemplate},${s.value}`)
+            break
+          }
+          case 'battery': {
+            console.log(s.value)
+            this.mqttClient.publish(this.defaultTopic, `${this.mqttBatteryTemplate},${s.value}`)
+            break
+          }
+          default: {
+            this.sendCustomMeasurement(s.id, s.id, s.value, s.id)
+            break
+          }
+        }
+      })
+    )
   }
   subscibteToOprations() {
     return this.mqttClient.subscribe('s/ds')
@@ -42,12 +67,15 @@ export default class MQTTOutputPlugin implements OutputPlugin {
   setDeviceInformation(serialNumber: string, hardwareModel: string, revision: string) {
     this.mqttClient.publish(this.defaultTopic, `110,${serialNumber},${hardwareModel},${revision}`)
   }
-  createCustomMeasurement(
+  sendCustomMeasurement(
     measurementName: string,
     measurementValueName: string,
     value: string,
     symbol: string
-  ): string {
-    return `${this.mqttCustomTemplate},${measurementName},${measurementValueName},${value},${symbol}`
+  ) {
+    this.mqttClient.publish(
+      this.defaultTopic,
+      `${this.mqttCustomTemplate},${measurementName},${measurementValueName},${value},${symbol}`
+    )
   }
 }
