@@ -1,6 +1,9 @@
 import { OutputPlugin, OUTPUT_TYPE, provideNamed, Payload, Sensor } from 'iot-simulator-shared'
 import { connect, Client } from 'mqtt'
 import uuid from 'uuid/v4'
+/**
+ * MQTT output plugin, templates compatible with mindsphere and cumulocity
+ */
 @provideNamed(OUTPUT_TYPE, 'mqtt-output')
 export default class MQTTOutputPlugin implements OutputPlugin {
   mqttClient: Client
@@ -30,6 +33,13 @@ export default class MQTTOutputPlugin implements OutputPlugin {
       clientId: this.mqttClientID
     })
   }
+  /**
+   * sends payload. Uses template 210 when sensor.id === rssi for RSSI,
+   * 211 when sensor.id === temperature for Temperature and
+   * 212 when sensor.id === battery for Battery.
+   * Every other uses template 200 for Custom Measurement
+   * @param payload
+   */
   send(payload: Payload) {
     payload.devices.forEach(d => {
       d.sensors.forEach(s => {
@@ -57,12 +67,28 @@ export default class MQTTOutputPlugin implements OutputPlugin {
   subscibteToOprations() {
     return this.mqttClient.subscribe('s/ds')
   }
+  /**
+   * creates device using template 100
+   */
   createDevice() {
     this.mqttClient.publish(this.defaultTopic, `100,${this.mqttClientName},iot-data-simulator`)
   }
+  /**
+   * Set device information with template 110
+   * @param serialNumber
+   * @param hardwareModel
+   * @param revision
+   */
   setDeviceInformation(serialNumber: string, hardwareModel: string, revision: string) {
     this.mqttClient.publish(this.defaultTopic, `110,${serialNumber},${hardwareModel},${revision}`)
   }
+  /**
+   * Send custom measurement using template 200
+   * @param measurementName
+   * @param measurementValueName
+   * @param value
+   * @param symbol
+   */
   sendCustomMeasurement(
     measurementName: string,
     measurementValueName: string,
