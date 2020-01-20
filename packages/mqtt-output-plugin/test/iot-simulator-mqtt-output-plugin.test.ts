@@ -32,7 +32,9 @@ describe('Dummy test', () => {
         {
           sensors: [
             { id: 'temperature', value: '25' },
-            { id: 'fuelconsumption', value: '10', unit: 'L', unitLabel: 'Liters' }
+            { id: 'rssi', value: '-37' },
+            { id: 'battery', value: '30' }
+            // { id: 'fuelconsumption', value: '10', unit: 'L', unitLabel: 'Liters' }
           ]
         }
       ]

@@ -31,22 +31,18 @@ export default class MQTTOutputPlugin implements OutputPlugin {
     })
   }
   send(payload: Payload) {
-    // this.mqttClient.publish(this.defaultTopic, payload, { qos: 0, retain: false })
-    payload.devices.forEach(d =>
+    payload.devices.forEach(d => {
       d.sensors.forEach(s => {
         switch (s.id) {
           case 'temperature': {
-            console.log(s.value)
             this.mqttClient.publish(this.defaultTopic, `${this.mqttTemperatureTemplate},${s.value}`)
             break
           }
           case 'rssi': {
-            console.log(s.value)
             this.mqttClient.publish(this.defaultTopic, `${this.mqttRSSITemplate},${s.value}`)
             break
           }
           case 'battery': {
-            console.log(s.value)
             this.mqttClient.publish(this.defaultTopic, `${this.mqttBatteryTemplate},${s.value}`)
             break
           }
@@ -56,7 +52,7 @@ export default class MQTTOutputPlugin implements OutputPlugin {
           }
         }
       })
-    )
+    })
   }
   subscibteToOprations() {
     return this.mqttClient.subscribe('s/ds')
