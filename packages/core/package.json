@@ -83,9 +83,13 @@
   },
   "dependencies": {
     "iot-simulator-api": "^0.0.0",
-    "iot-simulator-shared": "^0.0.0",
     "iot-simulator-faker-generator-plugin": "^0.0.0",
-    "iot-simulator-stdout-output-plugin": "^0.0.0"
+    "iot-simulator-shared": "^0.0.0",
+    "iot-simulator-stdout-output-plugin": "^0.0.0",
+    "inversify": "^5.0.1",
+    "inversify-binding-decorators": "^4.0.0",
+    "moment": "^2.24.0",
+    "rxjs": "^6.5.4"
   },
   "devDependencies": {
     "@commitlint/cli": "^7.1.2",

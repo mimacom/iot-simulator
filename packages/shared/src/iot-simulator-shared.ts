@@ -1,2 +1,3 @@
-export { InterfaceBuilder, builderOf } from './builder'
-export { provideNamed } from './provider'
+export * from './generator-parser'
+export * from './builder'
+export * from './provider'

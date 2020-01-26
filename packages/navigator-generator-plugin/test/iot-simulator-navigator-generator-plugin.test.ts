@@ -1,5 +1,5 @@
 import 'reflect-metadata'
-import NavigatorSimulator from '../src/iot-simulator-navigator-generator-plugin'
+import { NavigatorSimulator } from '../src/iot-simulator-navigator-generator-plugin'
 
 /**
  * Dummy test
