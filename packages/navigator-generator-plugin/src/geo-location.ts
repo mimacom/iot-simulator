@@ -4,3 +4,4 @@ interface GeoLocation {
   speed: number
 }
 
+export { GeoLocation }
