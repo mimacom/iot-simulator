@@ -1,5 +1,5 @@
-interface StatelessGeneratorPlugin<P, T> {
-  generate(config: P): T
+interface StatelessGeneratorPlugin<C, R> {
+  generate(config: C): R
 }
 
 const STATELESS_PLUGIN_TYPE = Symbol.for('StatelessGeneratorPlugin')

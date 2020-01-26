@@ -5,11 +5,9 @@ import { map, takeWhile } from 'rxjs/operators'
 import { TimeFrame } from '../runner/time-frame'
 
 class SensorEmitter {
-  private sensor: Partial<Sensor>
   private emitter: Observable<any>
 
-  constructor(private pluginExecutor: any, sensor: Partial<Sensor>, timeFrame: TimeFrame) {
-    this.sensor = sensor
+  constructor(private devicePath: string, private sensor: Partial<Sensor>, timeFrame: TimeFrame) {
     const historic = generate(
       this.generatePayload(timeFrame.startTime),
       event => event.timestamp < moment().valueOf(),
@@ -32,15 +30,12 @@ class SensorEmitter {
 
   private generatePayload(timestamp: number) {
     return {
-      id: this.sensor.id,
+      devicePath: this.devicePath,
+      sensorId: this.sensor.id,
       name: this.sensor.name,
       metadata: this.sensor.metadata,
       timestamp,
-      value: this.pluginExecutor.generate(
-        this.sensor.valueGenerator.pluginId,
-        null,
-        this.sensor.valueGenerator.config
-      )
+      value: this.sensor.valueGenerator(timestamp)
     }
   }
 }

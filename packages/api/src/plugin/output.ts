@@ -1,7 +1,9 @@
+import { Observable } from 'rxjs'
+
 interface OutputPlugin {
-  send: (payload: any) => void
+  registerSource(source: Observable<any>): void
+
+  setTransformFunction(mapper: Function): void
 }
 
-const OUTPUT_PLUGIN_TYPE = Symbol.for('OutputPlugin')
-
-export { OutputPlugin, OUTPUT_PLUGIN_TYPE }
+export { OutputPlugin }

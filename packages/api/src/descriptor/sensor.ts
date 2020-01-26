@@ -6,5 +6,5 @@ export interface Sensor {
   name: string | GeneratorConfig
   metadata?: Metadata
   samplingRate: number
-  valueGenerator: GeneratorConfig
+  valueGenerator: Function
 }
