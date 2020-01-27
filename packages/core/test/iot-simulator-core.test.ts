@@ -22,7 +22,7 @@ describe('Dummy test', () => {
       .title('Mining Company')
       .startTime(
         moment()
-          .subtract(1, 'hour')
+          .subtract(10, 'seconds')
           .format()
       )
       .endTime(
@@ -48,7 +48,7 @@ describe('Dummy test', () => {
                     unit: '°C',
                     label: 'External Temperature'
                   })
-                  .samplingRate(500000)
+                  .samplingRate(1000)
                   .valueGenerator(() =>
                     pluginExecutor.generate(
                       'faker',
@@ -82,7 +82,7 @@ describe('Dummy test', () => {
                         unit: 'C',
                         label: 'Engine Temperature'
                       })
-                      .samplingRate(500000)
+                      .samplingRate(5000)
                       .valueGenerator(() =>
                         pluginExecutor.generate(
                           'faker',

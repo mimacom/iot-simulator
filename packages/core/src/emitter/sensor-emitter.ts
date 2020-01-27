@@ -1,5 +1,5 @@
 import moment from 'moment'
-import { generate, interval, concat, Observable } from 'rxjs'
+import { generate, interval, concat, Observable, asyncScheduler } from 'rxjs'
 import { Sensor } from 'iot-simulator-api'
 import { map, takeWhile } from 'rxjs/operators'
 import { TimeFrame } from '../runner/time-frame'
@@ -13,7 +13,10 @@ class SensorEmitter {
       event => event.timestamp < moment().valueOf(),
       event => {
         return this.generatePayload(event.timestamp + this.sensor.samplingRate)
-      }
+      },
+      // enable async scheduler to avoid generating everything in the same loop
+      // This will allow us to have mixed sensors instead of fort sensor1, then sensor2, etc.
+      asyncScheduler
     ).pipe(takeWhile(event => event.timestamp < moment().valueOf()))
 
     const live = interval(sensor.samplingRate).pipe(
