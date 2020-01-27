@@ -1,9 +1,8 @@
-import { GeneratorConfig } from './generator-config'
 import { Metadata } from './metadata'
 
 export interface Sensor {
-  id: string | GeneratorConfig
-  name: string | GeneratorConfig
+  id: string
+  name: string
   metadata?: Metadata
   samplingRate: number
   valueGenerator: Function

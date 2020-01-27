@@ -1,9 +1,8 @@
 import { Observable } from 'rxjs'
+import { SensorPayload } from '../emitter'
 
 interface OutputPlugin {
-  registerSource(source: Observable<any>): void
-
-  setTransformFunction(mapper: Function): void
+  registerSource(source: Observable<SensorPayload>): void
 }
 
 export { OutputPlugin }
