@@ -1,41 +1,44 @@
 import { provideNamed } from 'iot-simulator-shared'
-import { OutputPlugin, OUTPUT_PLUGIN_TYPE } from 'iot-simulator-api'
-import {
-  DataPointValue,
-  IMindConnectConfiguration,
-  retry,
-  Mapping,
-  MindConnectAgent
-} from '@mindconnect/mindconnect-nodejs'
-
+import { OutputPlugin } from 'iot-simulator-api'
+import * as mindconnectNodejs from '@mindconnect/mindconnect-nodejs'
+import { Observable } from 'rxjs'
+import { map } from 'rxjs/operators'
 const log = (text: any) => {
   console.log(`[${new Date().toISOString()}] ${text.toString()}`)
 }
 
-@provideNamed(OUTPUT_PLUGIN_TYPE, 'mindsphere')
 export class IotSimulatorMindsphereOutputPlugin implements OutputPlugin {
-  private readonly mindConnectAgent: MindConnectAgent
+  private readonly mindConnectAgent: mindconnectNodejs.MindConnectAgent
   private static readonly RETRYTIMES: number = 5
-
-  constructor(mindConnectConfiguration: IMindConnectConfiguration) {
-    this.mindConnectAgent = new MindConnectAgent(mindConnectConfiguration)
+  private mapper: any
+  constructor(mindConnectConfiguration: mindconnectNodejs.IMindConnectConfiguration) {
+    this.mindConnectAgent = new mindconnectNodejs.MindConnectAgent(mindConnectConfiguration)
   }
 
+  registerSource(source: Observable<any>): void {
+    source
+      .pipe(map((data: any) => this.mapper(data)))
+      .subscribe((payload: any) => this.send(payload))
+  }
+
+  setTransformFunction(mapper: Function): void {
+    this.mapper = mapper
+  }
   public async send(payload: any) {
     log('Sending payload ...')
     await this.ensureOnBoarding()
 
-    let dataMappingsFromMindSphere: Mapping[] = []
-    await retry(
+    let dataMappingsFromMindSphere: mindconnectNodejs.Mapping[] = []
+    await mindconnectNodejs.retry(
       IotSimulatorMindsphereOutputPlugin.RETRYTIMES,
       async () => (dataMappingsFromMindSphere = await this.mindConnectAgent.GetDataMappings())
     )
 
-    const testData: DataPointValue[] = await this.transformPayloadToMindsphere(
+    const testData: mindconnectNodejs.DataPointValue[] = await this.transformPayloadToMindsphere(
       payload,
       dataMappingsFromMindSphere
     )
-    await retry(IotSimulatorMindsphereOutputPlugin.RETRYTIMES, () =>
+    await mindconnectNodejs.retry(IotSimulatorMindsphereOutputPlugin.RETRYTIMES, () =>
       this.mindConnectAgent.PostData(testData)
     )
     log('Data has been posted!')
@@ -43,12 +46,12 @@ export class IotSimulatorMindsphereOutputPlugin implements OutputPlugin {
 
   private async transformPayloadToMindsphere(
     payload: any,
-    dataMappingsFromMindSphere: Mapping[]
+    dataMappingsFromMindSphere: mindconnectNodejs.Mapping[]
   ) {
-    let result: DataPointValue[] = []
+    let result: mindconnectNodejs.DataPointValue[] = []
     payload.devices.forEach((device: any) => {
       device.sensors.forEach((sensor: any) => {
-        dataMappingsFromMindSphere.forEach((dataMappingMindsphere: Mapping) => {
+        dataMappingsFromMindSphere.forEach((dataMappingMindsphere: mindconnectNodejs.Mapping) => {
           if (
             sensor.id &&
             dataMappingMindsphere.propertyName &&
@@ -69,13 +72,13 @@ export class IotSimulatorMindsphereOutputPlugin implements OutputPlugin {
 
   private async ensureOnBoarding() {
     if (!this.mindConnectAgent.IsOnBoarded()) {
-      await retry(IotSimulatorMindsphereOutputPlugin.RETRYTIMES, () =>
+      await mindconnectNodejs.retry(IotSimulatorMindsphereOutputPlugin.RETRYTIMES, () =>
         this.mindConnectAgent.OnBoard()
       )
     }
 
     if (!this.mindConnectAgent.HasDataSourceConfiguration()) {
-      await retry(IotSimulatorMindsphereOutputPlugin.RETRYTIMES, () =>
+      await mindconnectNodejs.retry(IotSimulatorMindsphereOutputPlugin.RETRYTIMES, () =>
         this.mindConnectAgent.GetDataSourceConfiguration()
       )
       log('Data Source Configuration acquired!')
