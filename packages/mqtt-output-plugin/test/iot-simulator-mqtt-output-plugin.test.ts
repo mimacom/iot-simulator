@@ -1,5 +1,5 @@
 import 'reflect-metadata'
-import MQTTOutputPlugin from '../src/iot-simulator-mqtt-output-plugin'
+import MQTTOutputPlugin from '../src/plugin'
 
 const mqttClientName: string = 'iot-data-simulator'
 const mqttClientID: string = 'iot-data-simulator'
