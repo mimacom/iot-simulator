@@ -25,7 +25,7 @@ class PluginExecutor {
     return instanceid
   }
 
-  public generate(pluginId: string, instanceId: string, config: any) {
+  public generate(pluginId: string, config: any, instanceId?: string) {
     if (instanceId) {
       return this.container
         .getNamed<StatefulGeneratorPlugin<any, any>>(

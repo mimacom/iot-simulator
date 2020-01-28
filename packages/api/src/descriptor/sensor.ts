@@ -5,5 +5,5 @@ export interface Sensor {
   name: string
   metadata?: Metadata
   samplingRate: number
-  valueGenerator: Function
+  valueGenerator: (timestamp: number) => any
 }

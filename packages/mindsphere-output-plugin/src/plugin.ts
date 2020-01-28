@@ -1,21 +1,26 @@
 import { OutputPlugin, PayloadMapper, SensorPayload } from 'iot-simulator-api'
-import * as mc from '@mindconnect/mindconnect-nodejs'
 import { Observable, from } from 'rxjs'
 import { flatMap, map, bufferCount, delayWhen } from 'rxjs/operators'
 import { Configuration } from './config'
+import mc, {
+  MindConnectAgent as IMindConnectAgent,
+  Mapping,
+  DataPointValue
+} from '@mindconnect/mindconnect-nodejs'
+const { retry, MindConnectAgent } = mc
 
 const DEFAULT_RETRY_TIMES = 3
 const DEFAULT_BATCH_SIZE = 5
 
 class MindsphereOutputPlugin implements OutputPlugin {
-  private agent: mc.MindConnectAgent
+  private agent: IMindConnectAgent
   private mapper: PayloadMapper<any>
   private retryCount: number
   private batchSize: number
-  private dataMappings: mc.Mapping[] = []
+  private dataMappings: Mapping[] = []
 
   constructor(config: Configuration) {
-    this.agent = new mc.MindConnectAgent(config.agentConfig)
+    this.agent = new MindConnectAgent(config.agentConfig)
     this.mapper = config.transform || (input => input)
     this.retryCount = config.retryCount || DEFAULT_RETRY_TIMES
     this.batchSize = config.batchSize || DEFAULT_BATCH_SIZE
@@ -30,12 +35,12 @@ class MindsphereOutputPlugin implements OutputPlugin {
         bufferCount(this.batchSize),
         flatMap((batch: SensorPayload[]) => this.toDataBatch(batch))
       )
-      .subscribe((normalizedPayload: mc.DataPointValue[]) => this.send(normalizedPayload))
+      .subscribe((normalizedPayload: DataPointValue[]) => this.send(normalizedPayload))
   }
 
   private async toDataBatch(batch: SensorPayload[]) {
     // fetch dataMappings
-    const dataBatch: mc.DataPointValue[] = []
+    const dataBatch: DataPointValue[] = []
     // for every payload find the correspondent mapping
     for (let sensorPayload of batch) {
       const mapping = this.dataMappings.find(mapping => {
@@ -56,22 +61,22 @@ class MindsphereOutputPlugin implements OutputPlugin {
     return dataBatch
   }
 
-  private async send(dataBatch: mc.DataPointValue[]) {
-    await mc.retry(this.retryCount, () => this.agent.PostData(dataBatch))
+  private async send(dataBatch: DataPointValue[]) {
+    await retry(this.retryCount, () => this.agent.PostData(dataBatch))
   }
 
   private async init() {
     if (!this.agent.IsOnBoarded()) {
-      await mc.retry(this.retryCount, () => this.agent.OnBoard())
+      await retry(this.retryCount, () => this.agent.OnBoard())
       console.log('Agent onboarded')
     }
 
     if (!this.agent.HasDataSourceConfiguration()) {
-      await mc.retry(this.retryCount, () => this.agent.GetDataSourceConfiguration())
+      await retry(this.retryCount, () => this.agent.GetDataSourceConfiguration())
       console.log('Data Source Configuration acquired')
     }
 
-    await mc.retry(
+    await retry(
       this.retryCount,
       async () => (this.dataMappings = await this.agent.GetDataMappings())
     )
