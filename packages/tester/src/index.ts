@@ -32,9 +32,9 @@ import { MindsphereOutputPlugin } from "iot-simulator-mindsphere-output-plugin";
       .subtract(0, "seconds")
       .format(),
     endTime: moment()
-      .add(10, "second")
+      .add(600, "second")
       .format(),
-    devices: [1, 2].map(_ => ({
+    devices: [1].map(_ => ({
       id: pluginExecutor.generate("faker", "{{random.uuid}}"),
       name: "truck",
       metadata: {
@@ -48,7 +48,7 @@ import { MindsphereOutputPlugin } from "iot-simulator-mindsphere-output-plugin";
             unit: "C",
             label: "External Temperature"
           },
-          samplingRate: 1000,
+          samplingRate: 10000,
           valueGenerator: () =>
             pluginExecutor.generate(
               "faker",
@@ -83,7 +83,7 @@ import { MindsphereOutputPlugin } from "iot-simulator-mindsphere-output-plugin";
               valueGenerator: () =>
                 pluginExecutor.generate(
                   "faker",
-                  '{{random.number({"min": 80, "max": 100})}}'
+                  '{{random.number({"min": 80, "max": 85})}}'
                 )
             }
           ]
@@ -91,7 +91,7 @@ import { MindsphereOutputPlugin } from "iot-simulator-mindsphere-output-plugin";
       ]
     })),
     outputPlugins: [
-      new StdoutOutputPlugin(),
+//      new StdoutOutputPlugin(),
       new MindsphereOutputPlugin({
         agentConfig
       })

@@ -1,11 +1,12 @@
 import { OutputPlugin, PayloadMapper, SensorPayload } from 'iot-simulator-api'
 import { Observable, from } from 'rxjs'
-import { flatMap, map, bufferCount, delayWhen } from 'rxjs/operators'
+import { flatMap, map, delayWhen, filter } from 'rxjs/operators'
 import { Configuration } from './config'
 import mc, {
   MindConnectAgent as IMindConnectAgent,
   Mapping,
-  DataPointValue
+  DataPointValue,
+  TimeStampedDataPoint
 } from '@mindconnect/mindconnect-nodejs'
 const { retry, MindConnectAgent } = mc
 
@@ -21,7 +22,7 @@ class MindsphereOutputPlugin implements OutputPlugin {
 
   constructor(config: Configuration) {
     this.agent = new MindConnectAgent(config.agentConfig)
-    this.mapper = config.transform || (input => input)
+    this.mapper = config.transform || ((input: any) => input)
     this.retryCount = config.retryCount || DEFAULT_RETRY_TIMES
     this.batchSize = config.batchSize || DEFAULT_BATCH_SIZE
   }
@@ -32,17 +33,17 @@ class MindsphereOutputPlugin implements OutputPlugin {
       .pipe(
         delayWhen(() => from(this.init())),
         map((payload: SensorPayload) => this.mapper(payload)),
-        bufferCount(this.batchSize),
-        flatMap((batch: SensorPayload[]) => this.toDataBatch(batch))
+        flatMap((mapped: SensorPayload) => this.toDataBatch(mapped)),
+        filter((timeStampedDataPoint: any) => !!timeStampedDataPoint)
       )
-      .subscribe((normalizedPayload: DataPointValue[]) => this.send(normalizedPayload))
+      .subscribe(timedDataPointBatch => this.send([timedDataPointBatch]))
   }
 
-  private async toDataBatch(batch: SensorPayload[]) {
+  private async toDataBatch(batch: SensorPayload): Promise<TimeStampedDataPoint | null> {
     // fetch dataMappings
     const dataBatch: DataPointValue[] = []
     // for every payload find the correspondent mapping
-    for (let sensorPayload of batch) {
+    for (let sensorPayload of [batch]) {
       const mapping = this.dataMappings.find(mapping => {
         return mapping.propertyName === sensorPayload.name
       })
@@ -58,11 +59,16 @@ class MindsphereOutputPlugin implements OutputPlugin {
         console.log(`Dropping payload '${sensorPayload.name}', no mapping found`)
       }
     }
-    return dataBatch
+    if (dataBatch.length > 0) {
+      return { timestamp: new Date(batch.timestamp).toISOString(), values: dataBatch }
+    } else {
+      return null
+    }
   }
 
-  private async send(dataBatch: DataPointValue[]) {
-    await retry(this.retryCount, () => this.agent.PostData(dataBatch))
+  private async send(timeStampedDataPoint: TimeStampedDataPoint[]) {
+    console.log(JSON.stringify(timeStampedDataPoint, null, 2))
+    await retry(this.retryCount, () => this.agent.BulkPostData(timeStampedDataPoint))
   }
 
   private async init() {
