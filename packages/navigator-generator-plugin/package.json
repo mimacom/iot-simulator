@@ -1,5 +1,5 @@
 {
-  "name": "iot-simulator-navigator-generator-plugin",
+  "name": "@iot-simulator/navigator-generator-plugin",
   "version": "0.0.0",
   "description": "",
   "keywords": [],
@@ -82,11 +82,9 @@
     ]
   },
   "dependencies": {
+    "@iot-simulator/api": "^0.0.0",
+    "@iot-simulator/shared": "^0.0.0",
     "@google/maps": "^1.0.2",
-    "@mapbox/polyline": "^1.1.0",
-    "iot-simulator-api": "^0.0.0",
-    "iot-simulator-shared": "^0.0.0",
-    "polyline": "^0.2.0",
     "polyline-extended": "^1.1.1"
   },
   "devDependencies": {

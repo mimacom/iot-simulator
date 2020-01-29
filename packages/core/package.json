@@ -1,5 +1,5 @@
 {
-  "name": "iot-simulator-core",
+  "name": "@iot-simulator/core",
   "version": "0.0.0",
   "description": "",
   "keywords": [],
@@ -82,8 +82,8 @@
     ]
   },
   "dependencies": {
-    "iot-simulator-api": "^0.0.0",
-    "iot-simulator-shared": "^0.0.0",
+    "@iot-simulator/api": "^0.0.0",
+    "@iot-simulator/shared": "^0.0.0",
     "inversify": "^5.0.1",
     "inversify-binding-decorators": "^4.0.0",
     "moment": "^2.24.0",

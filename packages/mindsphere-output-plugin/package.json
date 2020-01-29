@@ -1,5 +1,5 @@
 {
-  "name": "iot-simulator-mindsphere-output-plugin",
+  "name": "@iot-simulator/mindsphere-output-plugin",
   "version": "0.0.0",
   "description": "",
   "keywords": [],
@@ -83,8 +83,8 @@
   },
   "dependencies": {
     "@mindconnect/mindconnect-nodejs": "^3.6.1",
-    "iot-simulator-api": "^0.0.0",
-    "iot-simulator-shared": "^0.0.0"
+    "@iot-simulator/api": "^0.0.0",
+    "@iot-simulator/shared": "^0.0.0"
   },
   "devDependencies": {
     "@commitlint/cli": "^7.1.2",

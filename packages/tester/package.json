@@ -27,16 +27,13 @@
     ]
   },
   "dependencies": {
-    "moment": "^2.24.0",
+    "@iot-simulator/api": "^0.0.0",
+    "@iot-simulator/shared": "^0.0.0",
+    "@iot-simulator/core": "^0.0.0",
+    "@iot-simulator/navigator-generator-plugin": "^0.0.0",
+    "@iot-simulator/mindsphere-output-plugin": "^0.0.0",
     "reflect-metadata": "^0.1.13",
-    "iot-simulator-api": "^0.0.0",
-    "iot-simulator-shared": "^0.0.0",
-    "iot-simulator-core": "^0.0.0",
-    "iot-simulator-navigator-generator-plugin": "^0.0.0",
-    "iot-simulator-mindsphere-output-plugin": "^0.0.0",
-    "@mindconnect/mindconnect-nodejs": "^3.6.1",
-    "inversify": "^5.0.1",
-    "inversify-binding-decorators": "^4.0.0",
+    "moment": "^2.24.0",
     "rxjs": "^6.5.4"
   },
   "devDependencies": {

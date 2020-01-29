@@ -2,9 +2,9 @@ import "reflect-metadata";
 import * as moment from "moment";
 import * as fs from "fs";
 
-import { Simulation } from "iot-simulator-api";
-import { PluginExecutor, SimulationRunner, StdoutOutputPlugin } from "iot-simulator-core";
-import { MindsphereOutputPlugin } from "iot-simulator-mindsphere-output-plugin";
+import { Simulation } from "@iot-simulator/api";
+import { PluginExecutor, SimulationRunner, StdoutOutputPlugin } from "@iot-simulator/core";
+import { MindsphereOutputPlugin } from "@iot-simulator/mindsphere-output-plugin";
 
 (async () => {
   const agentConfigFile: string = fs.readFileSync("./agentconfig.json", {
