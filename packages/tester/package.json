@@ -6,19 +6,33 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "prebuild": "rimraf dist",
-    "build": "tsc"
+    "build": "tsc",
+    "start": "ts-node src/index.ts"
   },
   "author": "",
   "license": "ISC",
+  "lint-staged": {
+    "{src,test}/**/*.ts": [
+      "prettier --write",
+      "git add"
+    ]
+  },
+  "prettier": {
+    "semi": false,
+    "singleQuote": true
+  },
+  "commitlint": {
+    "extends": [
+      "@commitlint/config-conventional"
+    ]
+  },
   "dependencies": {
     "moment": "^2.24.0",
     "reflect-metadata": "^0.1.13",
     "iot-simulator-api": "^0.0.0",
     "iot-simulator-shared": "^0.0.0",
     "iot-simulator-core": "^0.0.0",
-    "iot-simulator-faker-generator-plugin": "^0.0.0",
     "iot-simulator-navigator-generator-plugin": "^0.0.0",
-    "iot-simulator-stdout-output-plugin": "^0.0.0",
     "iot-simulator-mindsphere-output-plugin": "^0.0.0",
     "@mindconnect/mindconnect-nodejs": "^3.6.1",
     "inversify": "^5.0.1",
@@ -27,6 +41,11 @@
   },
   "devDependencies": {
     "@types/node": "^13.5.0",
+    "prettier": "^1.14.3",
+    "lint-staged": "^8.0.0",
+    "tslint": "^5.11.0",
+    "tslint-config-prettier": "^1.15.0",
+    "tslint-config-standard": "^8.0.1",
     "rimraf": "^3.0.1",
     "ts-node": "^8.6.2",
     "typescript": "^3.7.5"

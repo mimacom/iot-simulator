@@ -3,36 +3,30 @@ import * as moment from "moment";
 import * as fs from "fs";
 
 import { Simulation } from "iot-simulator-api";
-import { PluginExecutor, SimulationRunner } from "iot-simulator-core";
-
-import "iot-simulator-faker-generator-plugin";
-import { NavigatorGeneratorPlugin } from "iot-simulator-navigator-generator-plugin";
-
-import { StdoutOutputPlugin } from "iot-simulator-stdout-output-plugin";
+import { PluginExecutor, SimulationRunner, StdoutOutputPlugin } from "iot-simulator-core";
 import { MindsphereOutputPlugin } from "iot-simulator-mindsphere-output-plugin";
 
 (async () => {
-  const agentConfigFile: string = fs.readFileSync(
-    "/home/ntrp/_ws/mimacom/repos/iot-simulator/packages/mindsphere-output-plugin/src/agentconfig.json",
-    { encoding: "UTF-8" }
-  );
+  const agentConfigFile: string = fs.readFileSync("./agentconfig.json", {
+    encoding: "UTF-8"
+  });
   const agentConfig = JSON.parse(agentConfigFile);
 
   const pluginExecutor = new PluginExecutor();
 
-  const navigator = new NavigatorGeneratorPlugin("Stuttgart ", "Frankfurt", 70);
-  await navigator.init();
-  const navUuid = pluginExecutor.newInstance("navigator", navigator);
+  //const navigator = new NavigatorGeneratorPlugin("Stuttgart ", "Frankfurt", 70);
+  //await navigator.init();
+  //const navUuid = pluginExecutor.newInstance("navigator", navigator);
 
   const simulationConfig: Simulation = {
     title: "Mining Company",
     description:
       "Simulation of a mining company which has iot connected trucks",
     startTime: moment()
-      .subtract(0, "seconds")
+      .subtract(1, "hours")
       .format(),
     endTime: moment()
-      .add(600, "second")
+      .add(0, "second")
       .format(),
     devices: [1].map(_ => ({
       id: pluginExecutor.generate("faker", "{{random.uuid}}"),
@@ -43,18 +37,46 @@ import { MindsphereOutputPlugin } from "iot-simulator-mindsphere-output-plugin";
       sensors: [
         {
           id: pluginExecutor.generate("faker", "{{random.uuid}}"),
-          name: "Temperature",
+          name: "Humidity",
           metadata: {
-            unit: "C",
-            label: "External Temperature"
+            unit: "%",
+            label: "Humidity"
           },
-          samplingRate: 10000,
+          samplingRate: 1000 * 60 * 30,
           valueGenerator: () =>
             pluginExecutor.generate(
               "faker",
-              '{{random.number({"min": 18, "max": 20})}}'
+              '{{random.number({"min": 75, "max": 85})}}'
             )
         },
+        {
+          id: pluginExecutor.generate("faker", "{{random.uuid}}"),
+          name: "Pressure",
+          metadata: {
+            unit: "kPA",
+            label: "Pressure"
+          },
+          samplingRate: 1000 * 60 * 20,
+          valueGenerator: () =>
+            pluginExecutor.generate(
+              "faker",
+              '{{random.number({"min": 100, "max": 104, "precision": 0.1})}}'
+            )
+        },
+        {
+          id: pluginExecutor.generate("faker", "{{random.uuid}}"),
+          name: "Temperature",
+          metadata: {
+            unit: "C",
+            label: "Temperature"
+          },
+          samplingRate: 1000 * 60 * 10,
+          valueGenerator: () =>
+            pluginExecutor.generate(
+              "faker",
+              '{{random.number({"min": 16, "max": 21, "precision": 0.1})}}'
+            )
+        } /*,
         {
           id: pluginExecutor.generate("faker", "{{random.uuid}}"),
           name: "Location",
@@ -65,7 +87,7 @@ import { MindsphereOutputPlugin } from "iot-simulator-mindsphere-output-plugin";
           samplingRate: 60000,
           valueGenerator: (timestamp: number) =>
             pluginExecutor.generate("navigator", timestamp, navUuid)
-        }
+        }*/
       ],
       devices: [
         {
@@ -79,7 +101,7 @@ import { MindsphereOutputPlugin } from "iot-simulator-mindsphere-output-plugin";
                 unit: "C",
                 label: "Engine Temperature"
               },
-              samplingRate: 5000,
+              samplingRate: 1000 * 60 * 15,
               valueGenerator: () =>
                 pluginExecutor.generate(
                   "faker",
@@ -87,14 +109,34 @@ import { MindsphereOutputPlugin } from "iot-simulator-mindsphere-output-plugin";
                 )
             }
           ]
+        },
+        {
+          id: pluginExecutor.generate("faker", "{{random.uuid}}"),
+          name: "tires",
+          sensors: [
+            {
+              id: pluginExecutor.generate("faker", "{{random.uuid}}"),
+              name: "TirePressure",
+              metadata: {
+                unit: "C",
+                label: "Average Pressure"
+              },
+              samplingRate: 1000 * 60 * 10,
+              valueGenerator: () =>
+                pluginExecutor.generate(
+                  "faker",
+                  '{{random.number({"min": 2, "max": 3, "precision": 0.01})}}'
+                )
+            }
+          ]
         }
       ]
     })),
     outputPlugins: [
-//      new StdoutOutputPlugin(),
-      new MindsphereOutputPlugin({
-        agentConfig
-      })
+      new StdoutOutputPlugin(),
+      //new MindsphereOutputPlugin({
+      //  agentConfig
+      //})
     ]
   };
 

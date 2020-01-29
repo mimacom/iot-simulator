@@ -1,0 +1,10 @@
+{
+  "content": {
+    "baseUrl": "https://southgate.eu1.mindsphere.io",
+    "iat": "eyJraWQiOiJrZXktaWQtMSIsInR5cCI6IkpXVCIsImFsZyI6IlJTMjU2In0.eyJpc3MiOiJTQ0kiLCJzdWIiOiI4NTRiZDUxMDgzNjM0ZDNmODNhNmVlZjBiMGUwMmNmNyIsImF1ZCI6IkFJQU0iLCJpYXQiOjE1ODAyOTA4NTIsIm5iZiI6MTU4MDI5MDg1MiwiZXhwIjoxNTgwODk1NjUyLCJqdGkiOiJhNDcwOTNmYy0xZjc0LTRkMDYtODJiOC0yNjdlNmZmMzk4NTgiLCJzY29wZSI6IklBVCIsInRlbiI6Im1pbWFjb20iLCJ0ZW5fY3R4IjoibWFpbi10ZW5hbnQiLCJjbGllbnRfY3JlZGVudGlhbHNfcHJvZmlsZSI6WyJTSEFSRURfU0VDUkVUIl0sInNjaGVtYXMiOlsidXJuOnNpZW1lbnM6bWluZHNwaGVyZTp2MSJdfQ.KjOBkD3ySTlR9j_aQVJM5L3irhzZ86PDgNs2z-kC58xQ3bC4arvOn5WHcDdgXPiDe15k2CkpwoIa8WmuuK2aJhqqXuYaPB2Z7S--bDZ4fZTW929DvOWdK7OsGpugrOb1JpWl6B1kpdCZoIgGObCarWW-RcG-BoBKvFc4rtvhbb8Wpw3ZkoI_t0Viz0TObGyhpl1v3mKtZwy6GLdJCX7-CVdM-F5NX18HbeUur6XUewUhYsV1IGf2BrSQaawsKxcrhSMBnJ9sUKnZP6p4ugzo5osF88YVM_CEpVwLUdPUcihnHATGORuH4rhdGSE5g4JHuzKLupVWXx4znmRDDsyJeg",
+    "clientCredentialProfile": ["SHARED_SECRET"],
+    "clientId": "854bd51083634d3f83a6eef0b0e02cf7",
+    "tenant": "mimacom"
+  },
+  "expiration": "2020-02-05T09:40:52.000Z"
+}

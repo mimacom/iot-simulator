@@ -1,5 +1,3 @@
-# Usage
-Steps:
-lerna bootstrap
-lerna link
-lerna build  api -> shared -> stdout -> faker -> navi -> core
+# IoT Simulator
+
+IoT simulator is a pluggable iot simulation library that can parse a simulation configuration and generate semi realistic data using various plugins
