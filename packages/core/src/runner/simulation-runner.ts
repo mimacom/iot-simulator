@@ -35,7 +35,10 @@ class SimulationRunner {
         event => this.broadcaster.next(event),
         console.error,
         // resolve the promise when the generation completes
-        () => resolve()
+        () => {
+          this.broadcaster.complete()
+          resolve()
+        }
       )
     })
   }
