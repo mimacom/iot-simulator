@@ -1,6 +1,6 @@
-import { OutputPlugin } from 'iot-simulator-api'
 import { Observable } from 'rxjs'
 import { map } from 'rxjs/operators'
+import { OutputPlugin } from '@iot-simulator/api'
 
 class StdoutOutputPlugin implements OutputPlugin {
   private mapper: Function

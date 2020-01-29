@@ -1,5 +1,5 @@
 import * as mc from '@mindconnect/mindconnect-nodejs'
-import { PayloadMapper, SensorPayload } from 'iot-simulator-api'
+import { PayloadMapper, SensorPayload } from '@iot-simulator/api'
 
 interface Configuration {
   transform?: PayloadMapper<SensorPayload>

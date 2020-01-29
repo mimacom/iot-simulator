@@ -1,8 +1,9 @@
 import moment from 'moment'
-import { Device, Simulation, OutputPlugin } from 'iot-simulator-api'
+import { merge, Observable, Subject } from 'rxjs'
+import { Device, Simulation, OutputPlugin } from '@iot-simulator/api'
+
 import { SensorEmitter } from '../emitter/sensor-emitter'
 import { TimeFrame } from './time-frame'
-import { merge, Observable, Subject } from 'rxjs'
 
 class SimulationRunner {
   private simulation: Simulation

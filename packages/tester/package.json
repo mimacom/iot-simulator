@@ -28,7 +28,6 @@
   },
   "dependencies": {
     "@iot-simulator/api": "^0.0.0",
-    "@iot-simulator/shared": "^0.0.0",
     "@iot-simulator/core": "^0.0.0",
     "@iot-simulator/navigator-generator-plugin": "^0.0.0",
     "@iot-simulator/mindsphere-output-plugin": "^0.0.0",

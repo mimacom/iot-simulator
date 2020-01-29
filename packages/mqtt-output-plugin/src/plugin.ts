@@ -1,8 +1,9 @@
-import { OutputPlugin } from 'iot-simulator-api'
 import { connect, Client } from 'mqtt'
 import uuid from 'uuid/v4'
 import { Observable } from 'rxjs'
 import { map } from 'rxjs/operators'
+
+import { OutputPlugin } from '@iot-simulator/api'
 
 /**
  * MQTT output plugin, templates compatible with mindsphere and cumulocity

@@ -1,11 +1,11 @@
 {
-  "name": "@iot-simulator/shared",
+  "name": "@iot-simulator/common",
   "version": "0.0.0",
   "description": "",
   "keywords": [],
-  "main": "dist/iot-simulator-shared.umd.js",
-  "module": "dist/iot-simulator-shared.es5.js",
-  "typings": "dist/types/iot-simulator-shared.d.ts",
+  "main": "dist/iot-simulator-common.umd.js",
+  "module": "dist/iot-simulator-common.es5.js",
+  "typings": "dist/types/iot-simulator-common.d.ts",
   "files": [
     "dist"
   ],

@@ -1,7 +1,9 @@
-import { StatefulGeneratorPlugin } from 'iot-simulator-api'
-import { builderOf } from 'iot-simulator-shared'
-import { GeoLocation } from './geo-location'
 const polyline = require('polyline-extended')
+
+import { StatefulGeneratorPlugin } from '@iot-simulator/api'
+import { builderOf } from '@iot-simulator/common'
+
+import { GeoLocation } from './geo-location'
 
 const googleMapsClient = require('@google/maps').createClient({
   key: process.env.API_KEY,

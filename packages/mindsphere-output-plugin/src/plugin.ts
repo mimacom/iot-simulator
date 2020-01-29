@@ -1,7 +1,5 @@
-import { OutputPlugin, PayloadMapper, SensorPayload } from 'iot-simulator-api'
 import { Observable, from } from 'rxjs'
 import { flatMap, map, delayWhen, filter } from 'rxjs/operators'
-import { Configuration } from './config'
 import mc, {
   MindConnectAgent as IMindConnectAgent,
   Mapping,
@@ -9,6 +7,9 @@ import mc, {
   TimeStampedDataPoint
 } from '@mindconnect/mindconnect-nodejs'
 const { retry, MindConnectAgent } = mc
+import { OutputPlugin, PayloadMapper, SensorPayload } from '@iot-simulator/api'
+
+import { Configuration } from './config'
 
 const DEFAULT_RETRY_TIMES = 3
 const DEFAULT_BATCH_SIZE = 5

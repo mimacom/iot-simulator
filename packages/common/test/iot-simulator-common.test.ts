@@ -1,4 +1,4 @@
-import DummyClass from "../src/iot-simulator-shared"
+import DummyClass from "../src/iot-simulator-common"
 
 /**
  * Dummy test

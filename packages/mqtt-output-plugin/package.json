@@ -83,7 +83,7 @@
   },
   "dependencies": {
     "@iot-simulator/api": "^0.0.0",
-    "@iot-simulator/shared": "^0.0.0",
+    "@iot-simulator/common": "^0.0.0",
     "mqtt": "^3.0.0",
     "uuid": "^3.3.3"
   },

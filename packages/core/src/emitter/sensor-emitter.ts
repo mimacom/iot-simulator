@@ -1,7 +1,8 @@
 import moment from 'moment'
 import { generate, interval, concat, Observable, asyncScheduler } from 'rxjs'
-import { Sensor, SensorPayload } from 'iot-simulator-api'
 import { map, takeWhile, tap } from 'rxjs/operators'
+import { Sensor, SensorPayload } from '@iot-simulator/api'
+
 import { TimeFrame } from '../runner/time-frame'
 
 class SensorEmitter {

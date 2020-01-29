@@ -1,3 +1,4 @@
+const uuidv4 = require('uuid/v4')
 import { Container } from 'inversify'
 import { buildProviderModule } from 'inversify-binding-decorators'
 import {
@@ -5,8 +6,7 @@ import {
   StatefulGeneratorPlugin,
   STATELESS_PLUGIN_TYPE,
   StatelessGeneratorPlugin
-} from 'iot-simulator-api'
-const uuidv4 = require('uuid/v4')
+} from '@iot-simulator/api'
 
 class PluginExecutor {
   private container: Container
