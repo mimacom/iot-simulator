@@ -3,7 +3,12 @@ import * as moment from "moment";
 import * as fs from "fs";
 
 import { Simulation } from "@iot-simulator/api";
-import { PluginExecutor, SimulationRunner, StdoutOutputPlugin } from "@iot-simulator/core";
+import {
+  PluginExecutor,
+  SimulationRunner,
+  StdoutOutputPlugin,
+  MovingAverageGeneratorPlugin
+} from "@iot-simulator/core";
 import { MindsphereOutputPlugin } from "@iot-simulator/mindsphere-output-plugin";
 
 (async () => {
@@ -17,6 +22,8 @@ import { MindsphereOutputPlugin } from "@iot-simulator/mindsphere-output-plugin"
   //const navigator = new NavigatorGeneratorPlugin("Stuttgart ", "Frankfurt", 70);
   //await navigator.init();
   //const navUuid = pluginExecutor.newInstance("navigator", navigator);
+  const sma = new MovingAverageGeneratorPlugin(70, 80, 2, 10);
+  const smaUuid = pluginExecutor.newInstance("sma", sma);
 
   const simulationConfig: Simulation = {
     title: "Mining Company",
@@ -73,11 +80,7 @@ import { MindsphereOutputPlugin } from "@iot-simulator/mindsphere-output-plugin"
             label: "Temperature"
           },
           samplingRate: 1000,
-          valueGenerator: () =>
-            pluginExecutor.generate(
-              "faker",
-              '{{random.number({"min": 16, "max": 21, "precision": 0.1})}}'
-            )
+          valueGenerator: () => pluginExecutor.generate("sma", "", smaUuid)
         } /*,
         {
           id: pluginExecutor.generate("faker", "{{random.uuid}}"),
@@ -90,7 +93,7 @@ import { MindsphereOutputPlugin } from "@iot-simulator/mindsphere-output-plugin"
           valueGenerator: (timestamp: number) =>
             pluginExecutor.generate("navigator", timestamp, navUuid)
         }*/
-      ],
+      ]
       /*
       devices: [
         {
@@ -136,7 +139,7 @@ import { MindsphereOutputPlugin } from "@iot-simulator/mindsphere-output-plugin"
       ]*/
     })),
     outputPlugins: [
-      new StdoutOutputPlugin(),
+      new StdoutOutputPlugin()
       //new MindsphereOutputPlugin({
       //  agentConfig
       //})
@@ -146,5 +149,5 @@ import { MindsphereOutputPlugin } from "@iot-simulator/mindsphere-output-plugin"
   const sr = new SimulationRunner();
   sr.load(simulationConfig);
   await sr.run();
-  console.log("Done")
+  console.log("Done");
 })();
