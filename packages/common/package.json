@@ -83,6 +83,7 @@
   },
   "dependencies": {
     "@iot-simulator/api": "^0.0.0",
+    "inversify": "^5.0.1",
     "inversify-binding-decorators": "^4.0.0"
   },
   "devDependencies": {
