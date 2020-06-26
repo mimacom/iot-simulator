@@ -1,0 +1,28 @@
+name: IoT Simulator CI
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [10.x, 12.x, 14.x]
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Use Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v1
+      with:
+        node-version: ${{ matrix.node-version }}
+    - run: npm install
+    - run: lerna bootstrap
+    - run: lerna run build --scope=@iot-simulator/api
+    - run: lerna run build --scope=@iot-simulator/common
+    - run: lerna run build --scope=@iot-simulator/core
