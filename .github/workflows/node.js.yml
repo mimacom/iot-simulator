@@ -22,7 +22,7 @@ jobs:
       with:
         node-version: ${{ matrix.node-version }}
     - run: npm install
-    - run: lerna bootstrap
-    - run: lerna run build --scope=@iot-simulator/api
-    - run: lerna run build --scope=@iot-simulator/common
-    - run: lerna run build --scope=@iot-simulator/core
+    - run: ./node_modules/.bin/lerna bootstrap
+    - run: ./node_modules/.bin/lerna run build --scope=@iot-simulator/api
+    - run: ./node_modules/.bin/lerna run build --scope=@iot-simulator/common
+    - run: ./node_modules/.bin/lerna run build --scope=@iot-simulator/core
